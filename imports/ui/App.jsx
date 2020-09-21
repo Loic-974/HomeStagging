@@ -11,10 +11,11 @@ export const App = () => {
 
   return(
     <React.StrictMode>
-      <div>
+      <div id="Container">
         <Header/>     
         
         <input type='button'
+               className='buttonFormPiece buttonPopup'
                value='Ajouter une pièce'
                onClick = {() => setShowForm(!showForm)}
         />

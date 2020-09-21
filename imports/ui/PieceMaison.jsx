@@ -13,7 +13,12 @@ const [showTacheForm, setShowTacheForm] = useState(false)
 const [progressTache, setProgressTache]= useState(true)
 
 const [budgetMin, setBudgetMin] = useState('')
-console.log(pieces)
+
+//-------------------------------------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------------------------------------//
+//------------------------------------------------ Methode  ---------------------------------------------------------//
+//-------------------------------------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------------------------------------//
 
 const removePiece = (_id) => {
 
@@ -43,7 +48,8 @@ const submitNewTache = (_id,e) => {
     setTachePiece('')
 }
 
-// IMPOSSIBLE DE METTRE A JOUR dans la COLLECTION Incompréhension
+// IMPOSSIBLE DE METTRE A JOUR dans la COLLECTION Incompréhension ?????
+// Comment mettre à jour un élément du tableau d'un objet de la collection
 
 const accomplirTache = (tache) => {
 

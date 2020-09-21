@@ -34,7 +34,7 @@ export const FormAddPiece= () => {
 
     
     return (
-        <div className ='popup'>
+        <div className ='popupAddPiece'>
             
             <h3> Ajouter une nouvelle pièce </h3>
 
