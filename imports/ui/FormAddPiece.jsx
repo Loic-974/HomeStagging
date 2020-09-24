@@ -10,7 +10,6 @@ export const FormAddPiece= () => {
     const [largeur, setLargeur]= useState(Number)
     const surface = (longueur * largeur)
 
-    console.log(surface)
     const submitPiece = (e) => {
 
         e.preventDefault()

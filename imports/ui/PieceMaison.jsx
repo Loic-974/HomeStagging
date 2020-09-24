@@ -1,18 +1,23 @@
 import React, {useState} from 'react'
 import {useTracker} from 'meteor/react-meteor-data'
 import PieceMaisonCollection from '../api/PieceMaisonCollection'
-import {Mongo} from 'meteor/mongo'
+import {FormAddTache} from './FormAddTache'
+
 
 
 export const PieceMaison = () => {
 
-const idObject = new Meteor.Collection.ObjectID()   
+ 
 const pieces =  useTracker(() => PieceMaisonCollection.find({}).fetch()) // return sous forme d'array les pieces de la 
-const [tachePiece, setTachePiece] = useState('')
+
 const [showTacheForm, setShowTacheForm] = useState(false)
 const [progressTache, setProgressTache]= useState(true)
 
-const [budgetMin, setBudgetMin] = useState('')
+function formTacheVisibility(value){
+
+    setProgressTache(value)
+
+}
 
 //-------------------------------------------------------------------------------------------------------------------//
 //-------------------------------------------------------------------------------------------------------------------//
@@ -25,28 +30,6 @@ const removePiece = (_id) => {
     PieceMaisonCollection.remove(_id)
 }
 
-const submitNewTache = (_id,e) => {
-
-    e.preventDefault()
-
-    if(tachePiece !== ''){
-
-        PieceMaisonCollection.update(_id,       
-            {
-                $push: { travaux : {
-
-                    _idTache: idObject,
-                    tache : tachePiece,
-                    progression: false
-                }}
-            },
-        )
-    }
-
-    setShowTacheForm(!showTacheForm)
-
-    setTachePiece('')
-}
 
 // IMPOSSIBLE DE METTRE A JOUR dans la COLLECTION Incompréhension ?????
 // Comment mettre à jour un élément du tableau d'un objet de la collection
@@ -100,32 +83,8 @@ const accomplirTache = (tache) => {
                            onClick = {() => setShowTacheForm(!showTacheForm)}
                     />
 
-                    { showTacheForm === true && // si showTacheForm return true alors le form est visible
-
-//------------------------------------------------------------------------------------------------------------------------//
-// ---------------------------------------- Form ajout de tâche ----------------------------------------------------------//
-//------------------------------------------------------------------------------------------------------------------------//
-
-                    <form onSubmit={(e) => submitNewTache(item._id,e)}> 
-                        <input type='text' 
-                                placeholder='Entrer une nouvelle tache'
-                                value={tachePiece}
-                                onChange={(event)=> setTachePiece(event.currentTarget.value)}
-                        />
-
-                        <input type='text' 
-                                placeholder='Prix unitaire ou M²'
-                                value={budgetMin}
-                                onChange={(event)=> setBudgetMin(event.currentTarget.value)}
-                        />
-
-                        <input type='submit'
-                                value='Ajouter une nouvelle tache'
-                        />
-
-                    </form>
-                    }
-
+                    { showTacheForm === true &&  <FormAddTache _id={item._id}/> } 
+             
 {/* //-------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------- Liste des taches en cours ---------------------------------------------------------//
 //-------------------------------------------------------------------------------------------------------------------------------// */}
@@ -134,7 +93,7 @@ const accomplirTache = (tache) => {
 
                         <p>Tache en cours</p>
 
-                        {item.travaux.map(tache =>
+                        {item.travaux.map(tache => 
 
                         <li key={tache._idTache._str}>
                             
@@ -145,8 +104,18 @@ const accomplirTache = (tache) => {
                                     onChange={() => accomplirTache(tache)}
                                                     
                             />
-  
-                        </li>)}
+
+                           
+
+                             
+                        </li>
+                        
+                       
+
+                        )}
+
+
+
                         
                     </ul>
                 
@@ -162,6 +131,8 @@ const accomplirTache = (tache) => {
                 
             </div>)}
 
+
+                        
         </div>
 
     )

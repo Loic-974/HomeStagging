@@ -1,8 +1,9 @@
-import React, {useState, StrictMode} from 'react';
+import React, {useState} from 'react';
 import { version } from 'react-dom';
 import {Header} from './Header'
 import {FormAddPiece} from './FormAddPiece'
 import {PieceMaison} from './PieceMaison'
+import {FormAddTache} from './FormAddTache'
 
 
 export const App = () => {
@@ -10,7 +11,7 @@ export const App = () => {
   const [ showForm, setShowForm]= useState(false)
 
   return(
-    <React.StrictMode>
+ 
       <div id="Container">
         <Header/>     
         
@@ -25,7 +26,7 @@ export const App = () => {
         <PieceMaison/>
 
       </div>
-      </React.StrictMode>
+    
   )
 
 }
