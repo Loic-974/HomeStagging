@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
+import check from 'meteor/check'
 import { LinksCollection } from '/imports/api/links';
+import '/imports/api/tacheMethod'
 import PieceMaisonCollection from'../imports/api/PieceMaisonCollection'
 
 function insertLink({ title, url }) {

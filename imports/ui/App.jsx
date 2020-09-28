@@ -10,6 +10,8 @@ export const App = () => {
 
   const [ showForm, setShowForm]= useState(false)
 
+  
+
   return(
  
       <div id="Container">
@@ -19,9 +21,10 @@ export const App = () => {
                className='buttonFormPiece buttonPopup'
                value='Ajouter une pièce'
                onClick = {() => setShowForm(!showForm)}
+                  
         />
 
-        {showForm ===true &&  <FormAddPiece/>}
+        {showForm ===true &&  <FormAddPiece show={showForm}/>}
        
         <PieceMaison/>
 
