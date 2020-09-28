@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import Select from "react-select";
 import PieceMaisonCollection from "../api/PieceMaisonCollection";
 
-export const FormAddTache = ({ _id }) => {
+export const FormAddTache = ({ _id, surface }) => {
   const selectOption = [
     { value: "Travaux", label: "Travaux" },
     { value: "Décoration", label: "Décoration" },
@@ -12,7 +12,45 @@ export const FormAddTache = ({ _id }) => {
   const idObject = new Meteor.Collection.ObjectID();
   const [tachePiece, setTachePiece] = useState("");
   const [categorieTache, setCategorieTache] = useState(null);
-  const [budgetMin, setBudgetMin] = useState("");
+
+  const [budgetTravaux, setBudgetTravaux] = useState(0);
+
+  const [prixUnitaire, setPrixUnitaire] = useState(0)
+  const [quantitéDéco, setQuantitéDéco] = useState(0)
+  const [coutTotalDeco, setCoutTotalDeco] = useState(0)
+
+
+
+
+  const prixTravauxBySurface = (surface, value) => {
+
+    console.log('value = ', value)
+    console.log('surface =', surface.surface)
+    let prixTotal = (value * surface.surface)
+
+    console.log(prixTotal)
+
+    setBudgetTravaux(prixTotal)
+
+    console.log('budget travaux', budgetTravaux)
+
+    return prixTotal
+
+  }
+
+
+  const prixTotalDecoration = () => {
+
+    let prixTotal = (prixUnitaire * quantitéDéco)
+
+
+
+    return prixTotal
+
+  }
+
+
+
   //   const [showTacheForm, setShowTacheForm] = useState(true)
 
   const submitNewTache = (_id, e) => {
@@ -33,12 +71,13 @@ export const FormAddTache = ({ _id }) => {
   };
 
   function refsInfoMarque(value) {
-    console.log(value.value);
+
     let categorie = value.value;
 
     if (value != null) {
       setCategorieTache(categorie);
     }
+    console.log(value.value);
     return categorie;
   }
 
@@ -58,12 +97,34 @@ export const FormAddTache = ({ _id }) => {
         onChange={(value) => refsInfoMarque(value)}
       />
 
-      <input
-        type="text"
-        placeholder="Prix unitaire ou M²"
-        value={budgetMin}
-        onChange={(event) => setBudgetMin(event.currentTarget.value)}
-      />
+      {/* // Si catégorie select == travaux alors input visible */}
+
+      {categorieTache === 'Travaux' ? (
+        <input
+          type="number"
+          placeholder="Prix unitaire ou M²"
+          onChange={(event) => prixTravauxBySurface({ surface }, event.currentTarget.value)}
+        />
+      ) : (null)}
+
+      {categorieTache === 'Décoration' ? (
+
+        <Fragment>
+          <input type='number'
+            placeholder='Prix Unitaire'
+            value={prixUnitaire}
+            onChange={(event) => setPrixUnitaire(event.currentTarget.value)}
+          />
+
+          <input type='number'
+                 placeholder="Combien D\'unité"
+                 onChange ={(event) => setQuantitéDéco(event.currentTarget.value)}
+          />
+        </Fragment>
+
+      ) : null}
+
+
 
       <input type="submit" value="Ajouter une nouvelle tache" />
     </form>

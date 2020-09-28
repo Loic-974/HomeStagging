@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useTracker } from 'meteor/react-meteor-data'
 import PieceMaisonCollection from '../api/PieceMaisonCollection'
 import { FormAddTache } from './FormAddTache'
-import {Meteor} from 'meteor/meteor'
+import { Meteor } from 'meteor/meteor'
 
 
 export const PieceMaison = () => {
@@ -36,8 +36,8 @@ export const PieceMaison = () => {
 
     const accomplirTache = (item, tache) => {
 
-        console.log('je suis item',item)
-        console.log('je suis la tache',tache)
+        console.log('je suis item', item)
+        console.log('je suis la tache', tache)
 
         setProgressTache(!progressTache)
 
@@ -59,9 +59,9 @@ export const PieceMaison = () => {
         // )
 
         // Meteor.call('updateTache',item,tache,progressTache)
-        let toto= Meteor.call('updateTache',tache)
+        let toto = Meteor.call('updateTache', tache)
         console.log(toto)
-       
+
 
 
 
@@ -91,40 +91,83 @@ export const PieceMaison = () => {
                         onClick={() => setShowTacheForm(!showTacheForm)}
                     />
 
-                    {showTacheForm === true && <FormAddTache _id={item._id} />}
+                    {showTacheForm === true && <FormAddTache _id={item._id} surface={item.surfacePiece}/>}
 
-                    {/* //-------------------------------------------------------------------------------------------------------------------------------//
+{/* //-------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------- Liste des taches en cours ---------------------------------------------------------//
 //-------------------------------------------------------------------------------------------------------------------------------// */}
 
                     <ul>
 
-                        <p>Tache en cours</p>
+                        <h3>Tache en cours</h3>
+                        <h4>Travaux</h4>
 
                         {item.travaux.map(tache =>
 
-                            <li key={tache._idTache._str}>
-
-                                {tache.progression === false ? (tache.tache) : (<strike>{tache.tache}</strike>)}
-
-                                <input type='checkbox'
-                                    value={progressTache}
-                                    checked={tache.progression}
-                                    onChange={() => accomplirTache(item, tache)}
-
-                                />
+                            tache.categorie === 'Travaux' ? (
 
 
+                                <li key={tache._idTache._str}>
 
+                                    {tache.progression === false ? (tache.tache) : (<strike>{tache.tache}</strike>)}
 
-                            </li>
+                                    <input type='checkbox'
+                                        value={progressTache}
+                                        checked={tache.progression}
+                                        onChange={() => accomplirTache(item, tache)}
 
+                                    />
 
+                                </li>
 
+                            ) : (null)
+                        )}
+                        <h4>Décoration</h4>
+
+                        {item.travaux.map(tache =>
+
+                            tache.categorie === 'Décoration' ? (
+
+                                <li key={tache._idTache._str}>
+
+                                    {tache.progression === false ? (tache.tache) : (<strike>{tache.tache}</strike>)}
+
+                                    <input type='checkbox'
+                                        value={progressTache}
+                                        checked={tache.progression}
+                                        onChange={() => accomplirTache(item, tache)}
+
+                                    />
+
+                                </li>
+                            ) : (null)
                         )}
 
+                        <h4>Entretien</h4>
 
+                        {item.travaux.map(tache =>
 
+                            tache.categorie === 'Entretien' ? (
+
+                                <li key={tache._idTache._str}>
+
+                                    {tache.progression === false ? (tache.tache) : (<strike>{tache.tache}</strike>)}
+
+                                    <input type='checkbox'
+                                        value={progressTache}
+                                        checked={tache.progression}
+                                        onChange={() => accomplirTache(item, tache)}
+
+                                    />
+
+                                </li>
+                            ) : (null)
+                        )}
+
+                        <input type='button'
+                            value='Supprimer les Taches Accomplies'
+                            onClick={(e) => alert('yes')}
+                        />
 
                     </ul>
 
@@ -134,7 +177,6 @@ export const PieceMaison = () => {
                 <input type='button'
                     value='Delete Piece'
                     onClick={() => removePiece(item._id)}
-
                 />
 
 
