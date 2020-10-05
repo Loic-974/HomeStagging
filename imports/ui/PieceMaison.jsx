@@ -30,9 +30,18 @@ export const PieceMaison = () => {
         PieceMaisonCollection.remove(_id)
     }
 
+    const removeTask = (tache, item) => {
+
+        console.log(tache)
+
+        PieceMaisonCollection.remove({_id:item._id, tache:tache.tache})
+
+    }
+
     const showPopupForm = () => {
 
         setShowTacheForm(!showTacheForm)
+        
 
     }
 
@@ -44,29 +53,26 @@ export const PieceMaison = () => {
 
         console.log('je suis item', item)
         console.log('je suis la tache', tache)
+       
 
-        setProgressTache(!progressTache)
-
-
-        // PieceMaisonCollection.update(_id,
+        // let toto = item.travaux.find(x => x._idTache === tache._idTache)
+        // PieceMaisonCollection.update(item._id,tache.idTache,
         //     {
         //         $set: {
 
-        //             "travaux.": [{  // work but replace all the data with this one
+        //             "travaux": [{  // work but replace all the data with this one
 
-        //                 _idTache: tache._idTache,
+        //                 _idTache:tache._idTache ,
         //                 tache:tache.tache,
         //                 categorie:tache.categorie,
-        //                 progression : progressTache
+        //                 progression : true
 
         //             }]
         //         }
         //     }
         // )
 
-        // Meteor.call('updateTache',item,tache,progressTache)
-        let toto = Meteor.call('updateTache', tache)
-        console.log(toto)
+        Meteor.call('updateTache',item,tache)
     }
 
    
@@ -107,9 +113,9 @@ export const PieceMaison = () => {
 
                             tache.categorie === 'Travaux' ? (
 
-                                <li key={tache.tache} className='cardPiece'>
+                                <li key={tache._idTache} className='cardPiece'>
 
-                                    {tache.progression === false ? (<p>(tache.tache)</p>) : (<strike>{tache.tache}</strike>)}
+                                    {tache.progression === false ? (<p>{tache.tache} </p>) : (<strike>{tache.tache}</strike>)}
                                     <p>Cout : {tache.cout} €</p>
 
                                     <input type='checkbox'
@@ -119,6 +125,10 @@ export const PieceMaison = () => {
 
                                     />
 
+                                    <input type='button'
+                                            value="test"
+                                            onClick={() => removeTask(tache, item) }
+                                />
                                 </li>
 
                             ) : (null)
@@ -130,7 +140,7 @@ export const PieceMaison = () => {
 
                             tache.categorie === 'Décoration' ? (
 
-                                <li key={tache.tache}>
+                                <li key={tache._idTache}>
 
                                     {tache.progression === false ? 
 

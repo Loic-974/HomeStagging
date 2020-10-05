@@ -20,5 +20,8 @@
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "image-webpack-loader": "^7.0.1"
   }
 }

@@ -10,7 +10,7 @@ export const FormAddTache = ({ _id, surface, popup}) => {
 
   ];
 
-  const idObject = new Meteor.Collection.ObjectID();
+  const idObject = new Meteor.Collection.ObjectID()._str;
   const [tachePiece, setTachePiece] = useState("");
   const [categorieTache, setCategorieTache] = useState(null);
 
@@ -87,7 +87,7 @@ export const FormAddTache = ({ _id, surface, popup}) => {
       PieceMaisonCollection.update(_id, {
         $push: {
           travaux: {
-            // _idTache: idObject,
+             _idTache: idObject,
             tache: tachePiece,
             categorie: categorieTache,
             progression: false,
@@ -117,7 +117,7 @@ export const FormAddTache = ({ _id, surface, popup}) => {
 
   return (
 
-    <form className="popupAddPiece" onSubmit={(e) => submitNewTache({ _id }, e)}>
+    <form className="popupAddTache" onSubmit={(e) => submitNewTache({ _id }, e)}>
 
       <p> Ajouter une nouvelle Tache </p>
 
