@@ -22,8 +22,7 @@ export const App = () => {
         <input type='button'
                className='buttonFormPiece buttonPopup'
                value='Ajouter une pièce'
-               onClick = {() => setShowForm(!showForm)}
-                  
+               onClick = {() => setShowForm(!showForm)}               
         />
 
         {showForm ===true &&  <FormAddPiece show={showForm}/>}

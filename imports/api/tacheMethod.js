@@ -7,15 +7,6 @@ Meteor.methods({
 
     // 'updateTache'(item,tache,value) {
         'updateTache'(item, tache) {
-        // PieceMaisonCollection.update({"travaux._idTache._str":tache._idTache._str },
-        //     {
-        //         $set: {
-
-        //              "travaux.0.progression": value
-                  
-        //         }
-        //     }
-        // )
 
         PieceMaisonCollection.update(item._id,tache.idTache,
             {
@@ -26,7 +17,7 @@ Meteor.methods({
                         _idTache:tache._idTache ,
                         tache:tache.tache,
                         categorie:tache.categorie,
-                        progression : true
+                        progression : !tache.progression
 
                     }]
                 }
