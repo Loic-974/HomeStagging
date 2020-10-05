@@ -4,6 +4,8 @@ import {Header} from './Header'
 import {FormAddPiece} from './FormAddPiece'
 import {PieceMaison} from './PieceMaison'
 import {FormAddTache} from './FormAddTache'
+import Background from './media/background.jpeg';
+
 
 
 export const App = () => {
@@ -14,7 +16,7 @@ export const App = () => {
 
   return(
  
-      <div id="Container">
+      <div id="Container" style={{backgroundImage:"url("+ {Background} +")" }}>
         <Header/>     
         
         <input type='button'

@@ -6,7 +6,6 @@ export const Header = () => {
     const menuHeader = {
         link: [
         'Accueil',
-        'Ajouter une pièce',
         'Autres'
         ]
     }

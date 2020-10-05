@@ -30,6 +30,12 @@ export const PieceMaison = () => {
         PieceMaisonCollection.remove(_id)
     }
 
+    const showPopupForm = () => {
+
+        setShowTacheForm(!showTacheForm)
+
+    }
+
 
     // IMPOSSIBLE DE METTRE A JOUR dans la COLLECTION Incompréhension ?????
     // Comment mettre à jour un élément du tableau d'un objet de la collection
@@ -63,6 +69,7 @@ export const PieceMaison = () => {
         console.log(toto)
     }
 
+   
     //-------------------------------------------------------------------------------------------------------------------//
     //-------------------------------------------------------------------------------------------------------------------//
     //------------------------------------------------ Affichage --------------------------------------------------------//
@@ -80,13 +87,12 @@ export const PieceMaison = () => {
 
                 <div className='containerTachePiece'>
 
-
                     <input type='button'
                         value='Ajouter un travail à faire'
-                        onClick={() => setShowTacheForm(!showTacheForm)}
+                        onClick={showPopupForm}
                     />
 
-                    {showTacheForm === true && <FormAddTache _id={item._id} surface={item.surfacePiece}/>}
+                    {showTacheForm === true && <FormAddTache _id={item._id} surface={item.surfacePiece} popup={showPopupForm}/>}
 
 {/* //-------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------- Liste des taches en cours ---------------------------------------------------------//
@@ -94,7 +100,7 @@ export const PieceMaison = () => {
 
                     <ul>
 
-                        <h3>Tache en cours</h3>
+                        <h3>Achat en cours</h3>
                         <h4>Travaux</h4>
 
                         {item.travaux.map(tache =>
@@ -105,8 +111,6 @@ export const PieceMaison = () => {
 
                                     {tache.progression === false ? (<p>(tache.tache)</p>) : (<strike>{tache.tache}</strike>)}
                                     <p>Cout : {tache.cout} €</p>
-
-
 
                                     <input type='checkbox'
                                         value={progressTache}
@@ -119,6 +123,7 @@ export const PieceMaison = () => {
 
                             ) : (null)
                         )}
+
                         <h4>Décoration</h4>
 
                         {item.travaux.map(tache =>
@@ -143,7 +148,7 @@ export const PieceMaison = () => {
                             ) : (null)
                         )}
 
-                        <h4>Entretien</h4>
+                        <h4>Outillage</h4>
 
                         {item.travaux.map(tache =>
 

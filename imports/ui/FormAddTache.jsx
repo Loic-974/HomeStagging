@@ -2,11 +2,12 @@ import React, { Fragment, useEffect, useState } from "react";
 import Select from "react-select";
 import PieceMaisonCollection from "../api/PieceMaisonCollection";
 
-export const FormAddTache = ({ _id, surface }) => {
+export const FormAddTache = ({ _id, surface, popup}) => {
   const selectOption = [
     { value: "Travaux", label: "Travaux" },
+    { value: "Outillage", label: "Outillage" },
     { value: "Décoration", label: "Décoration" },
-    { value: "Entretien", label: "Entretien" },
+
   ];
 
   const idObject = new Meteor.Collection.ObjectID();
@@ -18,7 +19,7 @@ export const FormAddTache = ({ _id, surface }) => {
   const [prixUnitaire, setPrixUnitaire] = useState(0)
   const [quantitéDéco, setQuantitéDéco] = useState(0)
   const [coutTotalDeco, setCoutTotalDeco] = useState(0)
-
+  const [coutOutillage, setCoutOutillage] = useState(0)
 
 
 
@@ -51,6 +52,12 @@ export const FormAddTache = ({ _id, surface }) => {
 
   }
 
+  function closePopup (show) {
+
+    return !show
+
+  }
+
 
 
   //   const [showTacheForm, setShowTacheForm] = useState(true)
@@ -70,6 +77,8 @@ export const FormAddTache = ({ _id, surface }) => {
 
       cout = coutTotalDeco
       console.log('CoutTotalDeco', coutTotalDeco, 'Mon Cout', cout)
+    } else if (categorieTache == 'Outillage'){
+      cout = coutOutillage
     }
 
 
@@ -108,7 +117,9 @@ export const FormAddTache = ({ _id, surface }) => {
 
   return (
 
-    <form onSubmit={(e) => submitNewTache({ _id }, e)}>
+    <form className="popupAddPiece" onSubmit={(e) => submitNewTache({ _id }, e)}>
+
+      <p> Ajouter une nouvelle Tache </p>
 
       <input
         type="text"
@@ -129,9 +140,10 @@ export const FormAddTache = ({ _id, surface }) => {
       {categorieTache === 'Travaux' ? (
         <input
           type="number"
-          placeholder="Prix unitaire ou M²"
+          placeholder="Prix au M²"
           onChange={(event) => prixTravauxBySurface({ surface }, event.currentTarget.value)}
         />
+
       ) : (null)}
 
       {categorieTache === 'Décoration' ? (
@@ -153,9 +165,17 @@ export const FormAddTache = ({ _id, surface }) => {
 
       ) : null}
 
+        {categorieTache === 'Outillage' ? (
 
+          <input type="number"
+                 placeholder="Prix unitaire de l'Outil"
+                 value={coutOutillage}
+                 onChange={(event) => setCoutOutillage(event.currentTarget.value)}
+          />
+        ) : null}
 
-      <input type="submit" value="Ajouter une nouvelle tache" />
+        <input type="button" value="Fermer" onClick={popup}/>
+        <input type="submit" value="Ajouter une nouvelle tache" />
 
     </form>
   );
