@@ -61,11 +61,6 @@ export const PieceMaison = () => {
         // Meteor.call('updateTache',item,tache,progressTache)
         let toto = Meteor.call('updateTache', tache)
         console.log(toto)
-
-
-
-
-
     }
 
     //-------------------------------------------------------------------------------------------------------------------//
@@ -78,12 +73,12 @@ export const PieceMaison = () => {
 
         <div id='containerPieceMaison'>
 
-            {pieces.map(item => <div key={item._id} id={item._id}>
+            {pieces.map(item => <div key={item._id} className='pieceCard'>
 
                 <h2>{item.nomPiece}</h2>
                 <p>La surface de la pièce est de {item.surfacePiece} m²</p>
 
-                <div className='containerPieceMaison'>
+                <div className='containerTachePiece'>
 
 
                     <input type='button'
@@ -106,10 +101,12 @@ export const PieceMaison = () => {
 
                             tache.categorie === 'Travaux' ? (
 
+                                <li key={tache.tache} className='cardPiece'>
 
-                                <li key={tache._idTache._str}>
+                                    {tache.progression === false ? (<p>(tache.tache)</p>) : (<strike>{tache.tache}</strike>)}
+                                    <p>Cout : {tache.cout} €</p>
 
-                                    {tache.progression === false ? (tache.tache) : (<strike>{tache.tache}</strike>)}
+
 
                                     <input type='checkbox'
                                         value={progressTache}
@@ -128,10 +125,13 @@ export const PieceMaison = () => {
 
                             tache.categorie === 'Décoration' ? (
 
-                                <li key={tache._idTache._str}>
+                                <li key={tache.tache}>
 
-                                    {tache.progression === false ? (tache.tache) : (<strike>{tache.tache}</strike>)}
+                                    {tache.progression === false ? 
 
+                                    <p>{(tache.tache)} Cout : {tache.cout} €</p>
+
+                                    : (<strike> <p>{(tache.tache)} Cout : {tache.cout} €</p></strike>)}
                                     <input type='checkbox'
                                         value={progressTache}
                                         checked={tache.progression}
@@ -149,10 +149,10 @@ export const PieceMaison = () => {
 
                             tache.categorie === 'Entretien' ? (
 
-                                <li key={tache._idTache._str}>
+                                <li key={tache.tache}>
 
                                     {tache.progression === false ? (tache.tache) : (<strike>{tache.tache}</strike>)}
-
+                                    <p span='important'>Cout : {tache.cout} €</p>
                                     <input type='checkbox'
                                         value={progressTache}
                                         checked={tache.progression}
@@ -165,7 +165,7 @@ export const PieceMaison = () => {
                         )}
 
                         <input type='button'
-                            value='Supprimer les Taches Accomplies'
+                            value='Supprimer les Taches Accomplies'  // A faire 
                             onClick={(e) => alert('yes')}
                         />
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Select from "react-select";
 import PieceMaisonCollection from "../api/PieceMaisonCollection";
 
@@ -39,13 +39,15 @@ export const FormAddTache = ({ _id, surface }) => {
   }
 
 
-  const prixTotalDecoration = () => {
+  function prixTotalDecoration() {
 
     let prixTotal = (prixUnitaire * quantitéDéco)
 
+    setCoutTotalDeco(prixTotal)
 
+    console.log('prix total deco', prixTotal)
 
-    return prixTotal
+    // return prixTotal
 
   }
 
@@ -54,20 +56,43 @@ export const FormAddTache = ({ _id, surface }) => {
   //   const [showTacheForm, setShowTacheForm] = useState(true)
 
   const submitNewTache = (_id, e) => {
+
     e.preventDefault();
 
-    if (tachePiece !== "") {
+    let cout = 0
+
+    if (categorieTache == 'Travaux') {
+
+      cout = budgetTravaux
+      console.log('CoutTotalTravaux', budgetTravaux, 'Mon Cout', cout)
+
+    } else if (categorieTache == 'Décoration') {
+
+      cout = coutTotalDeco
+      console.log('CoutTotalDeco', coutTotalDeco, 'Mon Cout', cout)
+    }
+
+
+
+    if (tachePiece !== "" && categorieTache !== "") {
       PieceMaisonCollection.update(_id, {
         $push: {
           travaux: {
-            _idTache: idObject,
+            // _idTache: idObject,
             tache: tachePiece,
             categorie: categorieTache,
             progression: false,
+            cout: cout
           },
         },
       });
     }
+
+    setTachePiece('')
+    setCoutTotalDeco(0)
+    setBudgetTravaux(0)
+    setPrixUnitaire(0)
+    setQuantitéDéco(0)
   };
 
   function refsInfoMarque(value) {
@@ -82,7 +107,9 @@ export const FormAddTache = ({ _id, surface }) => {
   }
 
   return (
+
     <form onSubmit={(e) => submitNewTache({ _id }, e)}>
+
       <input
         type="text"
         placeholder="Entrer une nouvelle tache"
@@ -117,8 +144,10 @@ export const FormAddTache = ({ _id, surface }) => {
           />
 
           <input type='number'
-                 placeholder="Combien D\'unité"
-                 onChange ={(event) => setQuantitéDéco(event.currentTarget.value)}
+            placeholder="Combien D\'unité"
+            value={quantitéDéco}
+            onChange={(event) => setQuantitéDéco(event.currentTarget.value)}
+            onBlur={prixTotalDecoration}
           />
         </Fragment>
 
@@ -127,6 +156,7 @@ export const FormAddTache = ({ _id, surface }) => {
 
 
       <input type="submit" value="Ajouter une nouvelle tache" />
+
     </form>
   );
 };
